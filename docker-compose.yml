@@ -1,18 +1,26 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: frps
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/frps}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - ${PORT_SERVER:-7000}:7000/tcp  # server port
+      - ${PORT_PROXY_LO:-57000}-${PORT_PROXY_HI:-57100}:${PORT_PROXY_LO:-57000}-${PORT_PROXY_HI:-57100}/tcp  # proxy ports
+      - ${PORT_PROXY_LO:-57000}-${PORT_PROXY_HI:-57100}:${PORT_PROXY_LO:-57000}-${PORT_PROXY_HI:-57100}/udp  # proxy ports
+    volumes:
+      - config:/config:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - AUTH_TOKEN
+      - WEBUI_USER
+      - WEBUI_PASS
 
-volumes: {}
+volumes:
+  config:
 
 networks:
   default:
