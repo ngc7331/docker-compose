@@ -1,18 +1,25 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: npm
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-jc21/nginx-proxy-manager}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - 80:80/tcp
+      - 81:81/tcp
+      - 443:443/tcp
+    volumes:
+      - data:/data:rw
+      - cert:/etc/letsencrypt:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  data:
+  cert:
 
 networks:
   default:

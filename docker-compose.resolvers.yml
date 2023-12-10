@@ -1,0 +1,4 @@
+services:
+  app:
+    volumes:
+      - ${VOLUME_PATH_RESOLVERS:-./}resolv.conf:/etc/resolv.conf:ro
