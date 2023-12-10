@@ -37,3 +37,17 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Nginx-Proxy-Manager-specific notes
+## Using internal container service names as proxy hosts
+As mentioned in [this issue](NginxProxyManager/nginx-proxy-manager/issues/2423), internal container service names may be resolved by a public ipv6 DNS server, which may cause 502 error while trying to access the proxied services. Logs are as follows:
+
+```bash
+[root@nginx-proxy-manager:/]# cat /data/logs/proxy-host-1_error.log
+YYYY/MM/DD hh:mm:ss [error] 216#216: *60 <service name> could not be resolved (3: Host not found), client: <client address>, server: <hostname>, request: "GET / HTTP/2.0", host: "<hostname>"
+```
+
+A quick solution is just to disable those ipv6 DNS servers in `/etc/nginx/conf.d/include/resolvers.conf`. However, in nginx-proxy-manager, this file is generated from `/etc/resolv.conf`, see [this file](https://github.com/NginxProxyManager/nginx-proxy-manager/blob/master/docker/rootfs/etc/s6-overlay/s6-rc.d/prepare/40-dynamic.sh), so the solution is to modify `/etc/resolv.conf` in the container.
+
+We can do this by mounting a modified `resolv.conf` to the container. (i.e. `volumes: [ ./resolv.conf:/etc/resolv.conf:ro ]` in `docker-compose.resolvers.yml`)
+
+`docker-compose.resolvers.yml` will do the trick for you, use it as described in [extra compose files](#extra-compose-files).
