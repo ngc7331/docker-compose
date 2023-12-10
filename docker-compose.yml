@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    container_name: npm
+    image: docker.io/jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - 80:80/tcp
+      - 81:81/tcp
+      - 443:443/tcp
+    volumes:
+      - data:/data:rw
+      - cert:/etc/letsencrypt:rw
+    environment:
+      - TZ=Asia/Shanghai
+
+volumes:
+  data:
+  cert:
+
+networks:
+  br:
+    external: true
