@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    container_name: docker-registry
+    image: ${DOCKER_MIRROR:-docker.io}/ngc7331/registry:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - 5000:5000/tcp
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+      - AUTH_USER
+      - AUTH_PASS
+
+volumes:
+  config:
+  data:
+
+networks:
+  br:
+    external: true
