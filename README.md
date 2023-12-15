@@ -37,3 +37,8 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# V2rayA-specific notes
+## Host mode
+If you use macOS or other environments that do not support host mode, you cannot use the global transparent proxy in this case, or you do not want to use the global transparent proxy, use `docker-compose.nohost.yml` instead. Note this is not a extra compose file, but a replacement for the base file.
+
+See their docs [here](https://v2raya.org/en/docs/prologue/installation/docker/) for more information about host mode.
