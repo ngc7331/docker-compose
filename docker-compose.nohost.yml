@@ -2,12 +2,14 @@ services:
   app:
     container_name: v2raya
     image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-mzz2017/v2raya}:${DOCKER_TAG:-latest}
-    privileged: true  # need to be privileged to use kernel function like nftables and transparent proxy
     restart: unless-stopped
-    network_mode: host
+    networks:
+      - default
+    ports:
+      - 2017:2017/tcp
+      - 20170-20172:20170-20172/tcp
+      - 20170-20172:20170-20172/udp
     volumes:
-      - /lib/modules:/lib/modules:ro
-      - /etc/resolv.conf:/etc/resolv.conf:rw
       - config:/etc/v2raya
     environment:
       - TZ
@@ -15,7 +17,11 @@ services:
       - PGID
       - V2RAYA_LOG_FILE=/tmp/v2raya.log
       - V2RAYA_V2RAY_BIN=/usr/local/bin/xray
-      - V2RAYA_NFTABLES_SUPPORT
 
 volumes:
   config:
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK:-br}
