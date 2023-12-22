@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    container_name: jellyfin
+    image: ${DOCKER_MIRROR:-lscr.io}/linuxserver/jellyfin:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - 1900:1900/udp # Service discovery used by DNLA and clients
+      - 7359:7359/udp # Jellyfin service discovery
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+      - JELLYFIN_PublishedServerUrl
+      - DOCKER_MODS
+
+volumes:
+  config:
+  data:
+
+networks:
+  br:
+    external: true
