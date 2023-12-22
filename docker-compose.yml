@@ -1,18 +1,24 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: frpc
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/frpc}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - config:/config:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - SERVER_ADDR
+      - SERVER_PORT
+      - AUTH_TOKEN
+      - WEBUI_PASS
+      - PROXY_USER
 
-volumes: {}
+volumes:
+  config:
 
 networks:
   default:
