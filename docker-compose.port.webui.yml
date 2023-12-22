@@ -1,0 +1,6 @@
+version: '3'
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-8096}:8096/tcp # WebUI HTTP
+      - ${PORT_WEBUI_HTTPS:-8920}:8920/tcp # WebUI HTTPS
