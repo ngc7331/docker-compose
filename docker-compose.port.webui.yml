@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-7400}:7400/tcp
