@@ -1,0 +1,8 @@
+services:
+  app:
+    volumes:
+      - npm_cert:/cert:ro
+
+volumes:
+  npm_cert:
+    external: true

@@ -37,3 +37,27 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# AdGuardHome-specific notes
+## Ports
+By default, only ports for DNS(including DOH/DOT/DOQ) are exposed, but AdGuardHome also provides the following ports:
+- DHCP: 67-68/udp
+- DNSCrypt: 5443/tcp, 5443/udp
+- WebUI (only on initialization): 3000/tcp
+- WebUI (after initialization): 80/tcp, 443/tcp
+
+You can enable them using `docker-compose.port.<extra>.yml` file as described in [Extra compose files](#extra-compose-files). Also checkout [Unexposed WebUI](#unexposed-webui) for more information about WebUI.
+
+## SSL Certificates
+AdGuardHome needs a SSL certificate to run DOH/DOT/DOQ. You can use `docker-compose.cert.<extra>.yml` file as described in [Extra compose files](#extra-compose-files) to provide certificates.
+
+### Nginx-proxy-manager
+See `docker-compose.cert.npm.yml`
+
+NPM uses certbot to generate certificates, if you are using compose file in the repo, those certificates will be stored in a volume named `npm_cert`, you can use `docker-compose.cert.npm.yml` to mount the volume to AdGuardHome.
+
+After that, you can see the certificates in `/cert/live/npm-<id>/` inside the container, `<id>` can be found in NPM's WebUI (SSL Certificates page).
+
+### Manual
+See `docker-compose.cert.manual.yml`
+
+You can also mount any dir containing certificates to `/cert` inside the container by setting `VOLUME_PATH_CERT` environment variable and use `docker-compose.cert.manual.yml`.
