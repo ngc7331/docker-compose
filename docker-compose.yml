@@ -1,18 +1,26 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: jellyfin
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/jellyfin}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - 1900:1900/udp # Service discovery used by DNLA and clients
+      - 7359:7359/udp # Jellyfin service discovery
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - JELLYFIN_PublishedServerUrl
+      - DOCKER_MODS
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:

@@ -37,3 +37,35 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Jellyfin-specific notes
+## Hardware acceleration
+Some special resources is needed to be mapped into the container to enable hardware acceleration, see [official docs](https://jellyfin.org/docs/general/administration/hardware-acceleration/)
+
+You can use `docker-compose.ha.*.yml` files to enable them as described in [Extra compose files](#extra-compose-files).
+
+### VA-API (Intel/AMD)
+- device `/dev/dri` is mounted to container
+- see `docker-compose.ha.vaapi.yml`
+
+### QSV (Intel)
+Same as VA-API
+
+### NVENC (Nvidia)
+Hardware acceleration users for Nvidia will need to install the container runtime provided by Nvidia on their host, instructions can be found here:
+
+https://github.com/NVIDIA/nvidia-docker
+
+NVIDIA automatically mounts the GPU and drivers from your host into the jellyfin docker container.
+
+- runtime `nvidia` is specified
+- environment variable `NVIDIA_VISIBLE_DEVICES` is set to `all`
+- see `docker-compose.ha.nvenc.yml`
+
+### OpenMax (Raspberry Pi)
+As of Jellyfin 10.8 hardware acceleration on Raspberry Pi via OpenMAX OMX was dropped and is no longer available.
+
+See [official docs](https://jellyfin.org/docs/general/administration/hardware-acceleration/#raspberry-pi-v4l2)
+
+### V4L2 (Raspberry Pi)
+- device `/dev/video10`, `/dev/video11` and `/dev/video12` is mounted to container
+- see `docker-compose.ha.v4l2.yml`
