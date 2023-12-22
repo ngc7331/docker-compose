@@ -1,18 +1,24 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: qbittorrent
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/qbittorrent}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - ${PORT_BITTORRENT:-6881}:${PORT_BITTORRENT:-6881}/tcp # BitTorrent TCP connection port
+      - ${PORT_BITTORRENT:-6881}:${PORT_BITTORRENT:-6881}/udp # BitTorrent UDP connection port
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DOWNLOADS:-downloads}:/downloads:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  config:
+  downloads:
 
 networks:
   default:
