@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    container_name: frpc
+    image: ${DOCKER_MIRROR:-docker.io}/ngc7331/frpc:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - 7400:7400/tcp
+    volumes:
+      - config:/config:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+      - SERVER_ADDR
+      - SERVER_PORT=7000
+      - AUTH_TOKEN
+      - WEBUI_PASS
+      - PROXY_USER=user
+
+volumes:
+  config:
+
+networks:
+  br:
+    external: true
