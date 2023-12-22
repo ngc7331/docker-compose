@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    container_name: qbittorrent
+    image: ${DOCKER_MIRROR:-lscr.io}/linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - ${PORT_BITTORRENT:-6881}:${PORT_BITTORRENT:-6881}/tcp # BitTorrent TCP connection port
+      - ${PORT_BITTORRENT:-6881}:${PORT_BITTORRENT:-6881}/udp # BitTorrent UDP connection port
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DOWNLOADS:-downloads}:/downloads:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+
+volumes:
+  config:
+  downloads:
+
+networks:
+  br:
+    external: true
