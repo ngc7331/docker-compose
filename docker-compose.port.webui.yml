@@ -1,0 +1,5 @@
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-9000}:9000/tcp # WebUI HTTP
+      - ${PORT_WEBUI_HTTPS:-9443}:9443/tcp # WebUI HTTPS

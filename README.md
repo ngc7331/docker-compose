@@ -37,3 +37,13 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Portainer-specific notes
+## Edition
+By default, Portainer Business Edition is used. You can go [here](https://www.portainer.io/take-3) to get a 3-nodes free license.
+
+To use Portainer Community Edition, set `DOCKER_IMAGE=portainer/portainer-ce` in environment (e.g. `docker compose -e DOCKER_IMAGE=portainer/portainer-ce up`).
+
+## Edge clients
+If you plan to use the Edge compute features with Edge agents, note that those agents will connect to server using `8000/tcp` port.
+
+To expose this extra port, use `docker-compose.port.edge.yml` as described in [Extra compose files](#extra-compose-files).

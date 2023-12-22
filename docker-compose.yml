@@ -1,18 +1,21 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
-    restart: unless-stopped
+    container_name: portainer
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-portainer/portainer-ee}:${DOCKER_TAG:-latest}
+    privileged: true
+    restart: always
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - data:/data:rw
+      - /var/run/docker.sock:/var/run/docker.sock:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:
