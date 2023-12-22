@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    container_name: adguard
+    image: ${DOCKER_MIRROR:-docker.io}/adguard/adguardhome:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - 53:53/tcp # DNS
+      - 53:53/udp # DNS
+      - 443:443/udp # DNS over HTTPS
+      - 853:853/tcp # DNS over TLS
+      - 853:853/udp # DNS over QUIC
+    volumes:
+      - config:/opt/adguardhome/conf:rw
+      - data:/opt/adguardhome/work:rw
+    environment:
+      - TZ=Asia/Shanghai
+
+volumes:
+  config:
+  data:
+
+networks:
+  br:
+    external: true
