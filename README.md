@@ -46,3 +46,8 @@ Also, peers uses client's reported port to connect to it, so port forwarding by 
 Therefore, the port is set to be changeable by environment variable `PORT_BITTORRENT` and default to 6881. You can change it to any port you like.
 
 Do not forget to change the port in QBittorrent's settings as well.
+
+## Extra mountpoints
+Sometimes it is useful to mount some extra directories to QBittorrent container, for example, to download torrents directly to media library managed by Jellyfin.
+
+To implement this, `docker-compose.mnt.<extra>.yml` is provided. You can use them as described in [extra compose files](#extra-compose-files).
