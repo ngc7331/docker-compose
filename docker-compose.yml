@@ -1,18 +1,46 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: nextcloud
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/nextcloud}:${DOCKER_TAG:-latest}
     restart: unless-stopped
+    depends_on:
+      - db
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - MYSQL_HOST=nextcloud-db
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
 
-volumes: {}
+  db:
+    container_name: nextcloud-db
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/mariadb}:${DOCKER_TAG:-latest}
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - db:/config:rw
+    environment:
+      - TZ
+      - PUID
+      - PGID
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - REMOTE_SQL
+
+volumes:
+  config:
+  data:
+  db:
 
 networks:
   default:

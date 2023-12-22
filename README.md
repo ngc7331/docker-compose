@@ -37,3 +37,24 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Nextcloud-specific notes
+## Installation
+Although env variables (e.g. `MYSQL_HOST`) is set in compose file, reading db configuration from env variables is NOT supported by linuxserver/nextcloud image now.
+
+Therefore, it is necessary to use the web-based installer to finish the installation. Select MySQL/MariaDB as  fill in the db configuration as follows:
+
+```
+Database user: nextcloud
+Database password: <as set in env for nextcloud-db>
+Database name: nextcloud
+Database host: nextcloud-db
+```
+
+Luckily, linuxserver/mariadb image supports reading db configuration from env variables, so there's no need to pay extra attention to db configuration.
+
+## Mount host filesystem into container
+You can use `docker-compose.mnt.host.yml` to mount host filesystem `/` into container `/host/`. This is useful when you want to access host files from within the container (e.g. [Nextcloud external storage](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/external_storage/local.html)).
+
+The default mount options are `ro` (read-only), you can change it to `rw` (read-write) by setting `MOUNT_HOST_MODE=rw`.
+
+**But also, this could be dangerous, please be careful.**
