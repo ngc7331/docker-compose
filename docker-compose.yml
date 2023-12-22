@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+    container_name: portainer
+    image: ${DOCKER_MIRROR:-lscr.io}/portainer/portainer-ee:latest
+    restart: always
+    privileged: true
+    networks:
+      - br
+    volumes:
+      - data:/data:rw
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+
+volumes:
+  data:
+
+networks:
+  br:
+    external: true

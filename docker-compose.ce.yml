@@ -1,0 +1,4 @@
+version: '3'
+services:
+  app:
+    image: ${DOCKER_MIRROR:-lscr.io}/portainer/portainer-ce:latest
