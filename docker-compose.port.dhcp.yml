@@ -1,0 +1,5 @@
+services:
+  app:
+    ports:
+      - 67:67/udp # DHCPv4
+      - 68:68/udp # DHCPv4

@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-3000}:3000/tcp # WebUI HTTP (for initial configuration)

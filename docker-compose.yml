@@ -1,18 +1,27 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: adguard
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-adguard/adguardhome}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - 53:53/tcp # DNS
+      - 53:53/udp # DNS
+      - 443:443/udp # DNS over HTTPS
+      - 853:853/tcp # DNS over TLS
+      - 853:853/udp # DNS over QUIC
+    volumes:
+      - config:/opt/adguardhome/conf:rw
+      - data:/opt/adguardhome/work:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:

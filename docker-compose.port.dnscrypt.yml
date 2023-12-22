@@ -1,0 +1,5 @@
+services:
+  app:
+    ports:
+      - 5443:5443/tcp # DNSCrypt
+      - 5443:5443/udp # DNSCrypt
