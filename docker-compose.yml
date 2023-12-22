@@ -1,0 +1,47 @@
+version: '3'
+services:
+  app:
+    container_name: nextcloud
+    image: ${DOCKER_MIRROR:-lscr.io}/linuxserver/nextcloud:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - br
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+      - MYSQL_HOST=nextcloud-db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD
+  db:
+    container_name: nextcloud-db
+    image: ${DOCKER_MIRROR:-lscr.io}/linuxserver/mariadb:latest
+    restart: unless-stopped
+    networks:
+      - br
+    volumes:
+      - db:/config:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID
+      - PGID
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD
+      - REMOTE_SQL
+
+volumes:
+  config:
+  data:
+  db:
+
+networks:
+  br:
+    external: true

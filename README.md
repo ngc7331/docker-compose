@@ -37,3 +37,17 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Nextcloud-specific notes
+## Installation
+Although env variables (e.g. `MYSQL_HOST`) is set in compose file, reading db configuration from env variables is NOT supported by linuxserver/nextcloud image now.
+
+Therefore, it is necessary to use the web-based installer to finish the installation. Select MySQL/MariaDB as  fill in the db configuration as follows:
+
+```
+Database user: nextcloud
+Database password: <as set in env for nextcloud-db>
+Database name: nextcloud
+Database host: nextcloud-db
+```
+
+Luckily, linuxserver/mariadb image supports reading db configuration from env variables, so there's no need to pay extra attention to db configuration.
