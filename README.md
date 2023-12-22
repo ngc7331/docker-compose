@@ -37,3 +37,12 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# QBittorrent-specific notes
+## Ports for incoming connections
+QBittorrent uses port 6881 for incoming connections by default. However, this port is blacklisted by some of trackers and ISPs.
+
+Also, peers uses client's reported port to connect to it, so port forwarding by docker like `16881:6881/tcp` is not useable.
+
+Therefore, the port is set to be changeable by environment variable `PORT_BITTORRENT` and default to 6881. You can change it to any port you like.
+
+Do not forget to change the port in QBittorrent's settings as well.
