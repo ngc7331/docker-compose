@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    container_name: jenkins
+    image: ${DOCKER_MIRROR:-docker.io}/jenkins/jenkins:lts-jdk17
+    restart: unless-stopped
+    networks:
+      - br
+    volumes:
+      - ${VOLUME_PATH_DATA:-data}:/var/jenkins_home:rw
+    environment:
+      - JAVA_OPTS
+      - JENKINS_OPTS
+
+volumes:
+  data:
+
+networks:
+  br:
+    external: true
