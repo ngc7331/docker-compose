@@ -1,0 +1,5 @@
+version: '3'
+services:
+  app:
+    ports:
+      - ${PORT_WEBHOOK:-3233}:3233/tcp
