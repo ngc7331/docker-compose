@@ -7,7 +7,7 @@ services:
     networks:
       - br
     ports:
-      - ${PORT_HTTPS:-443}:443/tcp
+      - ${PORT_HTTPS:-443}:${PORT_HTTPS:-443}/tcp
     volumes:
       - data:/data:rw
     environment:
@@ -17,6 +17,7 @@ services:
       - DERP_CERTMODE=acme.sh
       - DERP_HOSTNAME
       - DERP_VERIFY_CLIENTS=false
+      - DERP_PORT_HTTPS=${PORT_HTTPS:-443}
       - ACME_SH_EMAIL
 
 volumes:
