@@ -1,0 +1,7 @@
+version: '3'
+services:
+  app:
+    ports:
+      - ${PORT_HTTP:-80}:80/tcp
+    environment:
+      - DERP_ENABLE_HTTP=true

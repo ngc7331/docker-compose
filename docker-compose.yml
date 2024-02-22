@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    container_name: derper
+    image: ${DOCKER_MIRROR:-docker.io}/ngc7331/derper:latest
+    restart: unless-stopped
+    networks:
+      - br
+    ports:
+      - ${PORT_HTTPS:-443}:443/tcp
+    volumes:
+      - data:/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID=1000
+      - PGID=1000
+      - DERP_CERTMODE=acme.sh
+      - DERP_HOSTNAME
+      - DERP_VERIFY_CLIENTS=false
+      - ACME_SH_EMAIL
+
+volumes:
+  data:
+
+networks:
+  br:
+    external: true
