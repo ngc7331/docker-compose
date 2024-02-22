@@ -1,0 +1,7 @@
+services:
+  app:
+    ports:
+      - ${PORT_STUN:-3478}:${PORT_STUN:-3478}/udp
+    environment:
+      - DERP_ENABLE_STUN=true
+      - DERP_PORT_STUN=${PORT_STUN:-3478}

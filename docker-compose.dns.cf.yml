@@ -1,0 +1,7 @@
+services:
+  app:
+    environment:
+      - ACME_SH_DNSAPI=dns_cf
+      - CF_Email
+      - CF_Zone_ID
+      - CF_Token

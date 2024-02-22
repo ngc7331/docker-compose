@@ -1,18 +1,26 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: derper
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/derper}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - ${PORT_HTTPS:-443}:${PORT_HTTPS:-443}/tcp
+    volumes:
+      - data:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - DERP_CERTMODE
+      - DERP_HOSTNAME
+      - DERP_VERIFY_CLIENTS
+      - DERP_PORT_HTTPS=${PORT_HTTPS:-443}
+      - ACME_SH_EMAIL
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:
