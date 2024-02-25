@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    container_name: ddns-go
+    image: ${DOCKER_MIRROR:-docker.io}/jeessy/ddns-go:latest
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - data:/root:rw
+
+volumes:
+  data:
+
+networks:
+  br:
+    external: true
