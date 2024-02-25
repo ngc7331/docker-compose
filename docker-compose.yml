@@ -1,20 +1,15 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: ddns-go
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-jeessy/ddns-go}:${DOCKER_TAG:-latest}
     restart: unless-stopped
-    networks:
-      - default
-    ports: []
-    volumes: []
+    network_mode: host
+    volumes:
+      - data:/root:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
-
-networks:
-  default:
-    external: true
-    name: ${DOCKER_NETWORK:-br}
+volumes:
+  data:
