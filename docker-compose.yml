@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    container_name: syncthing
+    image: ${DOCKER_MIRROR:-lscr.io}/linuxserver/syncthing:latest
+    restart: unless-stopped
+    networks:
+      - br
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-/}:/data:rw  # default mounting entire root to /data, maybe dangerous
+    ports:
+      - 22000:22000/tcp  # sync tcp
+      - 22000:22000/udp  # sync udp
+      - 21027:21027/udp  # discovery
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+
+volumes:
+  config:
+
+networks:
+  br:
+    external: true
