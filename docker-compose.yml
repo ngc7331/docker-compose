@@ -1,18 +1,25 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: syncthing
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/syncthing}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - 22000:22000/tcp  # sync tcp
+      - 22000:22000/udp  # sync udp
+      - 21027:21027/udp  # discovery
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:
