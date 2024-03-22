@@ -1,0 +1,4 @@
+services:
+  app:
+    volumes:
+      - /:/host:${MOUNT_HOST_MODE:-rw}  # default mounting entire root to /host, maybe dangerous

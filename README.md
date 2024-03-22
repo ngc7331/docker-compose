@@ -37,3 +37,10 @@ Set from `.env` file is also supported.
 In some cases, there will be application-specific notes below.
 
 ---
+# Syncthing-specific notes
+## Mount host filesystem into container
+You can use `docker-compose.mnt.host.yml` to mount host filesystem `/` into container `/host/`. This is useful when you want to access host files (and back them up or do something) from within the container.
+
+The default mount options are `rw` (read-write), this is because syncthing will need to write metadata to synced folder, you can change it to `ro` (read-only) by setting `MOUNT_HOST_MODE=ro`, but it's not useful I guess.
+
+**Also, this could be dangerous, please be careful.**

@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-8384}:8384/tcp # WebUI HTTP
