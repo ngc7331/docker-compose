@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    container_name: couchdb
+    image: ${DOCKER_MIRROR:-docker.io}/couchdb:latest
+    restart: unless-stopped
+    networks:
+      - br
+    volumes:
+      - config:/opt/couchdb/etc:rw
+      - data:/opt/couchdb/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID=1000
+      - PGID=1000
+      - COUCHDB_USER
+      - COUCHDB_PASSWORD
+
+volumes:
+  config:
+  data:
+
+networks:
+  br:
+    external: true
