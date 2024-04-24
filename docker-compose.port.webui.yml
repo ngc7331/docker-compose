@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_HTTP:-3001}:3001/tcp
