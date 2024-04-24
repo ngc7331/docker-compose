@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_HTTP:-5984}:5984/tcp

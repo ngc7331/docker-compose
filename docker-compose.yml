@@ -1,18 +1,23 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: couchdb
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-couchdb}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - config:/opt/couchdb/etc:rw
+      - data:/opt/couchdb/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - COUCHDB_USER
+      - COUCHDB_PASSWORD
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:
