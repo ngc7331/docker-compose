@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    container_name: uptime-kuma
+    image: ${DOCKER_MIRROR:-docker.io}/louislam/uptime-kuma:latest
+    restart: unless-stopped
+    networks:
+      - br
+    volumes:
+      - data:/app/data:rw
+    environment:
+      - TZ=Asia/Shanghai
+      - PUID=1000
+      - PGID=1000
+
+volumes:
+  data:
+
+networks:
+  br:
+    external: true
