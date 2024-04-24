@@ -1,18 +1,23 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: hath
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/hath}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - ${PORT_HATH:-9996}:${PORT_HATH:-9996}/tcp
+    volumes:
+      - data:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - HATH_CLIENT_ID
+      - HATH_CLIENT_KEY
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:
