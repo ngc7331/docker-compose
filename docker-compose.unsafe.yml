@@ -1,0 +1,4 @@
+version: '3'
+services:
+  app:
+    image: ${DOCKER_MIRROR:-docker.io}/ngc7331/derper:latest-unsafe
