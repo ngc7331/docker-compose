@@ -1,0 +1,7 @@
+services:
+  app:
+    environment:
+      - ALL_PROXY
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - NO_PROXY
