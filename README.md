@@ -5,16 +5,16 @@ Each application's files are on a separate branch
 
 ## Notes
 ### User-defined network
-Applications may use a external network "br" as follows:
+Applications may use a external custom network as follows:
 
 ```
 networks:
   br:
     external: true
-    name: br
+    name: ${DOCKER_NETWORK:-br}
 ```
 
-create it manually by `docker network create br` if needed
+create it manually by `docker network create ${DOCKER_NETWORK:-br}` if needed
 
 ### Unexposed WebUI
 In most cases, run applications behind a reverse proxy is recommended, so ports for WebUI is not exposed in the base `docker-compose.yml` file by default.
