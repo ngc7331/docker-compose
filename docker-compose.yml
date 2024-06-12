@@ -14,3 +14,4 @@ volumes:
 networks:
   br:
     external: true
+    name: ${DOCKER_NETWORK:-br}
