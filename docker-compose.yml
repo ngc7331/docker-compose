@@ -1,18 +1,24 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: tunasync
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/tunasync}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    ports:
+      - ${PORT_HTTP:-5000}:${PORT_HTTP:-5000}/tcp
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - HTTP_PORT=${PORT_HTTP:-5000}
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:
