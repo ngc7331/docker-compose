@@ -1,18 +1,21 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: mcsm-daemon
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/mcsmanager-daemon}:${DOCKER_TAG:-latest${MCSM_JDK_VERSION:-}}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - data:/opt/mcsm/daemon/data:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - JAVA_VERSION
+      - PLUGIN
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:
