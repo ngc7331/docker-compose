@@ -1,18 +1,19 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: mcsm-web
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/mcsmanager-web}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - data:/opt/mcsm/web/data:rw
     environment:
       - TZ
       - PUID
       - PGID
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:

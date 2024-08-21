@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_WEBUI_HTTP:-23333}:23333/tcp
