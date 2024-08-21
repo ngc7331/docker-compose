@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_API:-24444}:24444/tcp
