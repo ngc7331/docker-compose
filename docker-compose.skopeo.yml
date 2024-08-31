@@ -1,3 +1,5 @@
 services:
   app:
     image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/registry}:${DOCKER_TAG:-latest-skopeo}
+    environment:
+      - SKOPEO_MULTIARCH
