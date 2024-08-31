@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_SSH:-22}:22/tcp
