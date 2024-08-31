@@ -1,18 +1,24 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: gitea
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-gitea/gitea}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
     ports: []
-    volumes: []
+    volumes:
+      - data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - TZ
       - PUID
       - PGID
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
 
-volumes: {}
+volumes:
+  data:
 
 networks:
   default:
