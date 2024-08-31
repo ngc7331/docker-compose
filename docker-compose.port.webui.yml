@@ -1,0 +1,4 @@
+services:
+  app:
+    ports:
+      - ${PORT_HTTP:-3000}:3000/tcp
