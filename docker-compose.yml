@@ -1,0 +1,20 @@
+services:
+  app:
+    container_name: dummy
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    restart: unless-stopped
+    networks:
+      - default
+    ports: []
+    volumes: []
+    environment:
+      - TZ
+      - PUID
+      - PGID
+
+volumes: {}
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK:-br}
