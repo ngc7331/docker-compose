@@ -1,18 +1,39 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: mybot
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/mybot}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
-    environment:
-      - TZ
-      - PUID
-      - PGID
+    ports:
+      - ${PORT_HTTP:-8888}:8888/tcp
+    volumes:
+      - config:/config:rw
+      - data:/data:rw
 
-volumes: {}
+  napcat:
+    container_name: napcat
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE_NAPCAT:-mlikiowa/napcat-docker}:${DOCKER_TAG_NAPCAT:-latest}
+    restart: unless-stopped
+    depends_on:
+      - app
+    networks:
+      - default
+    volumes:
+      - napcat:/app/napcat/config:rw
+      - qq:/app/.config/QQ:rw
+    environment:
+      - ACCOUNT=${QQ_ACCOUNT}
+      - WSR_ENABLE=true
+      - WS_URLS=["ws://mybot:8888/onebot/v11/ws"]
+      - NAPCAT_UID=1000
+      - NAPCAT_GID=1000
+
+volumes:
+  config:
+  data:
+  napcat:
+  qq:
 
 networks:
   default:
