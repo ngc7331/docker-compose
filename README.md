@@ -51,3 +51,10 @@ Do not forget to change the port in QBittorrent's settings as well.
 Sometimes it is useful to mount some extra directories to QBittorrent container, for example, to download torrents directly to media library managed by Jellyfin.
 
 To implement this, `docker-compose.mnt.<extra>.yml` is provided. You can use them as described in [extra compose files](#extra-compose-files).
+
+## qBittorrent-ClientBlocker
+[Official repo](https://github.com/Simple-Tracker/qBittorrent-ClientBlocker)
+
+Ban XunLei, etc. clients from connecting to your qbittorrent.
+
+In order for the blocker to connect to your qbittorent API, you need to check `Options > Web UI > Web User Interface (Remote control) > Authentication > Bypass Authentication of Clients on Whitelisted IP Subnets` and fill in subnet(CIDR) of your docker network in qbittorent WebUI.
