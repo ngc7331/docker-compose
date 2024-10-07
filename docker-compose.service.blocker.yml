@@ -1,0 +1,13 @@
+services:
+  blocker:
+    container_name: qbittorrent-blocker
+    image: ${DOCKER_MIRROR_BLOCKER:-docker.io}/${DOCKER_IMAGE_BLOCKER:-simpletracker/qbittorrent-clientblocker}:${DOCKER_TAG_BLOCKER:-latest}
+    restart: unless-stopped
+    depends_on:
+      - app
+    networks:
+      - default
+    environment:
+      - useENV=true
+      - clientType=qBittorrent
+      - clientURL=http://qbittorrent:8080
