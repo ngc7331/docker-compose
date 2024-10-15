@@ -57,4 +57,4 @@ To implement this, `docker-compose.mnt.<extra>.yml` is provided. You can use the
 
 Ban XunLei, etc. clients from connecting to your qbittorrent.
 
-In order for the blocker to connect to your qbittorent API, you need to check `Options > Web UI > Web User Interface (Remote control) > Authentication > Bypass Authentication of Clients on Whitelisted IP Subnets` and fill in subnet(CIDR) of your docker network in qbittorent WebUI.
+In order for the blocker to connect to your qbittorent API, you need to check `Options > Web UI > Web User Interface (Remote control) > Authentication > Bypass Authentication of Clients on Whitelisted IP Subnets` and fill in subnet(CIDR) of your docker network in qbittorent WebUI. As alternative, you can also set `QBITTORRENT_USERNAME` and `QBITTORRENT_PASSWORD` in environment variables.

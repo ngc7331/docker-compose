@@ -11,3 +11,5 @@ services:
       - useENV=true
       - clientType=qBittorrent
       - clientURL=http://qbittorrent:8080
+      - clientUsername=${QBITTORRENT_USERNAME:-}
+      - clientPassword=${QBITTORRENT_PASSWORD:-}
