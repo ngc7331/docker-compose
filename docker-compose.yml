@@ -1,18 +1,24 @@
 services:
   app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+    container_name: calibre-web
+    image: ${DOCKER_MIRROR:-lscr.io}/${DOCKER_IMAGE:-linuxserver/calibre-web}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
     ports: []
-    volumes: []
+    volumes:
+      - config:/config:rw
+      - ${VOLUME_PATH_DATA:-data}:/books:rw
     environment:
       - TZ
       - PUID
       - PGID
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE
 
-volumes: {}
+volumes:
+  config:
+  data:
 
 networks:
   default:
