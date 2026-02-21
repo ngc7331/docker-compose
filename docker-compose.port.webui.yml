@@ -1,0 +1,4 @@
+services:
+  astrbot:
+    ports:
+      - 6185:${PORT_WEBUI:-6185}

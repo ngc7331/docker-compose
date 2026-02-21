@@ -1,0 +1,21 @@
+services:
+  napcat:
+    container_name: bot-napcat
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE_NAPCAT:-mlikiowa/napcat-docker}:${DOCKER_TAG_NAPCAT:-latest}
+    restart: unless-stopped
+    networks:
+      - default
+    mac_address: ${NAPCAT_MAC_ADDRESS:-02:42:ac:11:00:02}
+    volumes:
+      - napcat-config:/app/napcat/config:rw
+      - napcat-ntqq:/app/.config/QQ:rw
+      - astrbot-data:/AstrBot/data:rw
+      - /etc/machine-id:/etc/machine-id:ro
+    environment:
+      - NAPCAT_UID=${PUID:-1000}
+      - NAPCAT_GID=${PGID:-1000}
+      - MODE=astrbot
+
+volumes:
+  napcat-config:
+  napcat-ntqq:

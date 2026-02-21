@@ -1,0 +1,4 @@
+services:
+  napcat:
+    ports:
+      - 6099:${PORT_WEBUI_NAPCAT:-6099}

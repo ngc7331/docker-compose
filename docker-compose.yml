@@ -1,18 +1,17 @@
 services:
-  app:
-    container_name: dummy
-    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-ngc7331/baseimage-alpine}:${DOCKER_TAG:-3.20}
+  astrbot:
+    container_name: bot-astrbot
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE:-soulter/astrbot}:${DOCKER_TAG:-latest}
     restart: unless-stopped
     networks:
       - default
-    ports: []
-    volumes: []
+    volumes:
+      - astrbot-data:/AstrBot/data:rw
     environment:
-      - TZ
-      - PUID
-      - PGID
+      - TZ=Asia/Shanghai
 
-volumes: {}
+volumes:
+  astrbot-data:
 
 networks:
   default:
