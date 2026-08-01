@@ -1,0 +1,4 @@
+services:
+  snowluma:
+    ports:
+      - ${PORT_VNC_SNOWLUMA:-5900}:5900

@@ -1,0 +1,30 @@
+services:
+  snowluma:
+    container_name: bot-snowluma
+    image: ${DOCKER_MIRROR:-docker.io}/${DOCKER_IMAGE_SNOWLUMA:-motricseven7/snowluma}:${DOCKER_TAG_SNOWLUMA:-latest}
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - snowluma-data:/app/snowluma-data
+      - snowluma-qq-config:/app/.config
+      - snowluma-qq-data:/app/.local/share
+    shm_size: 1gb
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
+    environment:
+      - VNC_PASSWD=${VNC_PASSWD:-vncpasswd}
+      - SNOWLUMA_UID=${PUID:-1000}
+      - SNOWLUMA_GID=${PGID:-1000}
+      - SNOWLUMA_LOG_LEVEL=${SNOWLUMA_LOG_LEVEL:-info}
+      - SNOWLUMA_SCREEN=${SNOWLUMA_SCREEN:-1920x1080x24}
+      - SNOWLUMA_HOOK_AUTOLOAD=${SNOWLUMA_HOOK_AUTOLOAD:-1}
+      - SNOWLUMA_EXTRA_QQ_HOMES=${SNOWLUMA_EXTRA_QQ_HOMES:-}
+      - SNOWLUMA_QQ_FLAGS=${SNOWLUMA_QQ_FLAGS:---disable-gpu --disable-software-rasterizer --disable-gpu-compositing}
+
+volumes:
+  snowluma-data:
+  snowluma-qq-config:
+  snowluma-qq-data:

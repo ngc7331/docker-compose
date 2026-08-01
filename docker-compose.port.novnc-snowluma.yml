@@ -1,0 +1,4 @@
+services:
+  snowluma:
+    ports:
+      - ${PORT_NOVNC_SNOWLUMA:-6081}:6081

@@ -1,0 +1,6 @@
+services:
+  snowluma:
+    ports:
+      - ${PORT_WEBUI_SNOWLUMA:-5099}:${PORT_WEBUI_SNOWLUMA:-5099}
+    environment:
+      - SNOWLUMA_WEBUI_PORT=${PORT_WEBUI_SNOWLUMA:-5099}
