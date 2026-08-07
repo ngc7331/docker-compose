@@ -6,7 +6,7 @@ services:
     networks:
       - default
     volumes:
-      - snowluma-data:/app/snowluma-data
+      - snowluma-data:/app/data
       - snowluma-qq-config:/app/.config
       - snowluma-qq-data:/app/.local/share
     shm_size: 1gb
