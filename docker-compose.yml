@@ -9,6 +9,7 @@ services:
       - astrbot-data:/AstrBot/data:rw
     environment:
       - TZ=Asia/Shanghai
+      - WEREAD_API_KEY
 
 volumes:
   astrbot-data:
